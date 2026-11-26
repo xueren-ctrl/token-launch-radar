@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="sweep" aria-hidden="true"></div>
+  <h1>TOKEN RADAR</h1>
+  <p class="sub">Pre-token protocols, ranked by implied value — from the sealed 14 November 2026 snapshot. No live data, no guesses: every number below comes from that snapshot.</p>
+  <div class="chips" id="chips"></div>
+</header>
+<main>
+  <section class="card" id="model">
+    <h2>How the value is built</h2>
+    <p class="formula">implied value = TVL &times; category multiple &times; growth &times; maturity &times; breadth</p>
+    <p>The <b>category multiple</b> is the median market-cap / TVL of the token-bearing protocols in the same category, computed from this snapshot at build time. Categories with fewer than 3 token-bearing peers fall back to the global median. Multiples are clamped to 0.05–2.00. Growth rewards upside more than it punishes downside (7d change clamped to −40%…+150%). Maturity rises with listing age up to 4 years. Breadth adds up to 20% for multi-chain protocols. No protocol name is ever special-cased.</p>
+    <div class="sandbox">
+      <h3>Model sandbox — move the sliders, the board recomputes live</h3>
+      <div class="sliders" id="sliders"></div>
+      <p class="note" id="sandbox-note">Defaults shown. The submitted board uses the default model; the sandbox is a what-if.</p>
+    </div>
+    <details>
+      <summary>Peer multiples by category</summary>
+      <table class="mini" id="multiples"></table>
+    </details>
+  </section>
+
+  <section class="card">
+    <div class="controls">
+      <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search">
+      <select id="cat" aria-label="Category"></select>
+      <select id="chain" aria-label="Chain"></select>
+      <select id="mintvl" aria-label="Minimum TVL">
+        <option value="0">Any TVL</option>
+        <option value="50000000">TVL ≥ $50M</option>
+        <option value="100000000">TVL ≥ $100M</option>
+        <option value="500000000">TVL ≥ $500M</option>
+        <option value="1000000000">TVL ≥ $1B</option>
+      </select>
+    </div>
+    <div class="tabs" role="tablist">
+      <button id="tab-board" role="tab" aria-selected="true">Pre-token board</button>
+      <button id="tab-live" role="tab" aria-selected="false">Live tokens</button>
+      <button id="tab-excluded" role="tab" aria-selected="false">Excluded</button>
+    </div>
+    <p class="count" id="count"></p>
+    <div class="tablewrap"><table id="board"></table></div>
+    <p class="hint">Click a row for the factor breakdown and farm plan. Click a column header to sort. ★ marks a watchlist protocol.</p>
+  </section>
+
+  <section class="card">
+    <h2>What was left out, and why</h2>
+    <p id="excluded-summary"></p>
+    <div class="tablewrap"><table class="mini" id="excluded"></table></div>
+  </section>
+
+  <footer>
+    <p>Method: the board ranks every genuine pre-token protocol in the snapshot — all 40 watchlist codes plus every other protocol that records no token and is not a centralised exchange, a wrapped / staked / bridged product, or a versioned pool. Implied values follow from TVL, peer multiples, 7-day growth, listing age and chain breadth. Farm plans are templated by category and chain, never by protocol name.</p>
+    <p>Data: DefiLlama protocols snapshot, 14 November 2026, floor $50,000,000. This page is fully offline: no fetch, no external links, no tracking.</p>
+  </footer>
+</main>
+<dialog id="detail"></dialog>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
